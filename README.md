@@ -1,0 +1,1 @@
+# graphqlify-schema-results
