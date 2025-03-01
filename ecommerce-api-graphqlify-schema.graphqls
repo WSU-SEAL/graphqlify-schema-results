@@ -1,0 +1,287 @@
+type CartItem {
+  productId: Long
+  variantId: Long
+  quantity: Int
+}
+
+input CartItemInput {
+  productId: Long
+  variantId: Long
+  quantity: Int
+}
+
+type File {
+  path: String
+}
+
+type GroupResource {
+  id: Long
+  groupName: String
+  price: String
+  variants: [GroupVariant]
+}
+
+type GroupVariant {
+  id: Long
+  variantName: String
+  group: ProductGroup
+}
+
+input GroupVariantInput {
+  id: Long
+  variantName: String
+  group: ProductGroupInput
+}
+
+scalar JSON
+
+type Link {
+  rel: String
+  href: String
+  template: UriTemplate
+}
+
+scalar Long
+
+type Mutation {
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/CartController.java:39:5]"
+  addProduct(cartId: String, cartItem: CartItemInput @payload): String
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/CartController.java:34:5]"
+  create: String
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/GroupController.java:74:5]"
+  createUsingGroup(group: ProductGroupInput @payload): ProductGroup
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/OrderController.java:45:5]"
+  createUsingOrder(order: OrderInput @payload): Order
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:58:5]"
+  createUsingProduct(product: ProductInput @payload): Product
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/CartController.java:63:5]"
+  createOrder(cartId: String, order: OrderInput @payload): OrderResource
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/GroupController.java:53:5]"
+  edit(id: Long, group: ProductGroupInput @payload): ProductGroup
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/OrderController.java:62:5]"
+  editUsingIdAndOrder(id: Long, order: OrderInput @payload): Order
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:73:5]"
+  editUsingIdAndProduct(id: Long, product: ProductInput @payload): Product
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:125:5]"
+  handleFileUpload(id: String, file: Upload): String
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/CartController.java:50:5]"
+  removeItem(cartId: String, productId: String): String
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/CartController.java:56:5]"
+  setProductQuantity(cartId: String, cartItem: CartItemInput @payload): String
+}
+
+type Order {
+  id: Long
+  name: String
+  address: String
+  city: String
+  zip: String
+  status: String
+  comment: String
+  totalPrice: String
+  type: String
+  created: String
+  items: [OrderItem]
+}
+
+input OrderInput {
+  id: Long
+  name: String
+  address: String
+  city: String
+  zip: String
+  status: String
+  comment: String
+  totalPrice: String
+  type: String
+  created: String
+  items: [OrderItemInput]
+}
+
+type OrderItem {
+  id: Int
+  price: String
+  order: Order
+  product: Product
+  groupVariant: GroupVariant
+}
+
+input OrderItemInput {
+  id: Int
+  price: String
+  order: OrderInput
+  product: ProductInput
+  groupVariant: GroupVariantInput
+}
+
+type OrderResource {
+  id: Long
+  name: String
+  address: String
+  city: String
+  zip: String
+  status: String
+  comment: String
+  totalPrice: String
+  type: String
+  created: String
+  items: [OrderItem]
+}
+
+type Product {
+  id: Long
+  name: String
+  created: String
+  price: String
+  description: String
+  group: ProductGroup
+  userId: String
+}
+
+type ProductGroup {
+  id: Long
+  groupName: String
+  price: String
+  created: String
+  groupVariants: [GroupVariant]
+}
+
+input ProductGroupInput {
+  id: Long
+  groupName: String
+  price: String
+  created: String
+  groupVariants: [GroupVariantInput]
+}
+
+type ProductImage {
+  id: Long
+  productId: Long
+  path: String
+}
+
+input ProductInput {
+  id: Long
+  name: String
+  created: String
+  price: String
+  description: String
+  group: ProductGroupInput
+  userId: String
+}
+
+type ProductResource {
+  id: Long
+  name: String
+  price: String
+  description: String
+  group: JSON
+}
+
+type Query {
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/CartController.java:45:5]"
+  getCartItems(cartId: String): [CartItem]
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/GroupController.java:32:5]"
+  index: [GroupResource]
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/OrderController.java:30:5]"
+  indexReturnsOrderResources: [OrderResource]
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:45:5]"
+  indexReturnsProductResources: [ProductResource]
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:99:5]"
+  serveFile(id: String): Resource
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/GroupController.java:46:5]"
+  view(id: Long): GroupResource
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/OrderController.java:55:5]"
+  viewUsingId(id: Long): OrderResource
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:63:5]"
+  viewReturnsResourceSupport(id: Long): ResourceSupport
+  "[/Users/amarees/IdeaProjects/spring-rest-ecommerce/src/main/java/net/vatri/ecommerce/controllers/ProductController.java:89:5]"
+  viewImages(productId: String): [ProductImage]
+}
+
+interface Resource {
+  exists: Boolean
+  isReadable: Boolean
+  isOpen: Boolean
+  getURL: URL
+  getURI: URI
+  getFile: File
+  contentLength: Long
+  lastModified: Long
+  createRelative: Resource
+  getFilename: String
+  getDescription: String
+}
+
+type ResourceSupport {
+  links: [Link]
+}
+
+type TemplateVariable {
+  name: String
+  type: VariableType
+  description: String
+}
+
+type TemplateVariables {
+  variables: [TemplateVariable]
+}
+
+type URI {
+  string: String
+}
+
+type URL {
+  protocol: String
+  host: String
+  port: Int
+  file: String
+  authority: String
+  ref: String
+  hashCode: Int
+}
+
+scalar Upload
+
+type UriTemplate {
+  variables: TemplateVariables
+  baseUri: String
+}
+
+enum VariableType {
+  PATH_VARIABLE
+  REQUEST_PARAM
+  REQUEST_PARAM_CONTINUED
+  SEGMENT
+  FRAGMENT
+}
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+directive @payload on ARGUMENT_DEFINITION
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+

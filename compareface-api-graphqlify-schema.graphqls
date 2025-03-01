@@ -1,0 +1,376 @@
+enum AppStatus {
+  OK
+  NOT_READY
+}
+
+input Base64FileInput {
+  content: String
+}
+
+scalar Byte
+
+type ConfigDto {
+  maxFileSize: Long
+  maxBodySize: Long
+}
+
+scalar Double
+
+type DtoFacesAge {
+  probability: Double
+  high: Int
+  low: Int
+}
+
+type DtoFacesBox {
+  probability: Double
+  xMax: Int
+  yMax: Int
+  xMin: Int
+  yMin: Int
+}
+
+type DtoFacesGender {
+  probability: Double
+  value: String
+}
+
+type DtoFacesPose {
+  pitch: Double
+  roll: Double
+  yaw: Double
+}
+
+type DtoPluginsVersionsDto {
+  age: String
+  gender: String
+  pose: String
+  detector: String
+  calculator: String
+  mask: String
+}
+
+type EmbeddingDto {
+  embeddingId: String
+  subjectName: String
+}
+
+type EmbeddingRecognitionProcessResult {
+  embedding: [Double]
+  similarities: [EmbeddingSimilarityResult]
+}
+
+type EmbeddingSimilarityResult {
+  subject: String
+  similarity: Float
+}
+
+type EmbeddingVerificationProcessResult {
+  embedding: [Double]
+  similarity: Float
+}
+
+type EmbeddingsRecognitionProcessResponse {
+  result: [EmbeddingRecognitionProcessResult]
+}
+
+input EmbeddingsRecognitionRequestInput {
+  embeddings: [[Double]]
+}
+
+type EmbeddingsVerificationProcessResponse {
+  result: [EmbeddingVerificationProcessResult]
+}
+
+input EmbeddingsVerificationRequestInput {
+  source: [Double]
+  targets: [[Double]]
+}
+
+type EntryOfStringCollectionOfVerifyFacesResponse {
+  key: String
+  value: [VerifyFacesResponse]
+}
+
+type EntryOfStringObject {
+  key: String
+  value: JSON
+}
+
+type ExecutionTimeDto {
+  age: Double
+  gender: Double
+  pose: Double
+  detector: Double
+  calculator: Double
+  mask: Double
+}
+
+type FaceMatch {
+  similarity: Float
+}
+
+type FacePredictionResultDto {
+  subjects: [FaceSimilarityDto]
+  landmarks: [[Int]]
+}
+
+type FaceSimilarityDto {
+  subject: String
+  similarity: Float
+}
+
+type FaceVerification {
+  box: DtoFacesBox
+  subject: String
+  similarity: Float
+  landmarks: [[Int]]
+  age: FacesAge
+  gender: FacesGender
+  pose: FacesPose
+  embedding: [Double]
+  executionTime: ExecutionTimeDto
+  mask: FacesMask
+}
+
+type Faces {
+  source: PageOfEmbeddingDto
+}
+
+type FacesAge {
+  probability: Double
+  high: Int
+  low: Int
+}
+
+type FacesAgeDto {
+  probability: Double
+  high: Int
+  low: Int
+}
+
+type FacesBox {
+  probability: Double
+  xMax: Int
+  yMax: Int
+  xMin: Int
+  yMin: Int
+}
+
+type FacesDetectionResponseDto {
+  pluginsVersions: PluginsVersionsDto
+  result: [FindFacesResultDto]
+}
+
+type FacesGender {
+  probability: Double
+  value: String
+}
+
+type FacesGenderDto {
+  probability: Double
+  value: String
+}
+
+type FacesMask {
+  probability: Double
+  value: String
+}
+
+type FacesMaskDto {
+  probability: Double
+  value: String
+}
+
+type FacesPose {
+  pitch: Double
+  roll: Double
+  yaw: Double
+}
+
+type FacesPoseDto {
+  pitch: Double
+  roll: Double
+  yaw: Double
+}
+
+type FacesRecognitionResponseDto {
+  pluginsVersions: PluginsVersionsDto
+  result: [FacePredictionResultDto]
+}
+
+type FindFacesResultDto {
+  age: FacesAgeDto
+  gender: FacesGenderDto
+  pose: FacesPoseDto
+  embedding: [Double]
+  box: FacesBox
+  executionTime: ExecutionTimeDto
+  landmarks: [[Int]]
+  mask: FacesMaskDto
+}
+
+scalar JSON
+
+scalar Long
+
+type Mutation {
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:84:5]"
+  addEmbedding(file: Upload, subjectName: String, detProbThreshold: Double, apiKey: String): EmbeddingDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:115:5]"
+  addEmbeddingBase64(apiKey: String, subjectName: String, detProbThreshold: Double, request: Base64FileInput @payload): EmbeddingDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/SubjectController.java:36:5]"
+  createSubject(apiKey: String, subjectDto: SubjectDtoInput @payload): SubjectDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:194:5]"
+  deleteEmbeddingById(apiKey: String, embeddingId: ID): EmbeddingDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:208:5]"
+  deleteEmbeddingsById(apiKey: String, embeddingIds: [ID] @payload): [EmbeddingDto]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/SubjectController.java:81:5]"
+  deleteSubject(apiKey: String, subjectName: String): [EntryOfStringObject]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/SubjectController.java:100:5]"
+  deleteSubjects(apiKey: String): [EntryOfStringObject]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/DetectionController.java:60:5]"
+  detect(file: Upload, limit: Int, detProbThreshold: Double, facePlugins: String, status: Boolean): FacesDetectionResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/DetectionController.java:99:5]"
+  detectBase64(limit: Int, detProbThreshold: Double, facePlugins: String, status: Boolean, request: Base64FileInput @payload): FacesDetectionResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/MigrateController.java:38:5]"
+  migrate: String
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/RecognizeController.java:72:5]"
+  recognize(apiKey: String, file: Upload, limit: Int, predictionCount: Int, detProbThreshold: Double, facePlugins: String, status: Boolean, detectFaces: Boolean): FacesRecognitionResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:268:5]"
+  recognizeBase64(apiKey: String, embeddingId: ID, limit: Int, detProbThreshold: Double, facePlugins: String, status: Boolean, request: Base64FileInput @payload): VerificationResult
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/RecognizeController.java:116:5]"
+  recognizeBase64UsingApiKeyAndLimitAndDetProbThresholdAndFacePluginsAndStatusAndDetectFacesAndPredictionCountAndRequest(apiKey: String, limit: Int, detProbThreshold: Double, facePlugins: String, status: Boolean, detectFaces: Boolean, predictionCount: Int, request: Base64FileInput @payload): FacesRecognitionResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:312:5]"
+  recognizeEmbeddings(apiKey: String, imageId: ID, recognitionRequest: EmbeddingsRecognitionRequestInput @payload): EmbeddingsVerificationProcessResponse
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/RecognizeController.java:160:5]"
+  recognizeEmbeddingsUsingApiKeyAndPredictionCountAndRecognitionRequest(apiKey: String, predictionCount: Int, recognitionRequest: EmbeddingsRecognitionRequestInput @payload): EmbeddingsRecognitionProcessResponse
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:225:5]"
+  recognizeFile(apiKey: String, file: Upload, limit: Int, embeddingId: ID, detProbThreshold: Double, facePlugins: String, status: Boolean): VerificationResult
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:176:5]"
+  removeAllSubjectEmbeddings(apiKey: String, subjectName: String): [EntryOfStringObject]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/SubjectController.java:62:5]"
+  renameSubject(apiKey: String, oldSubjectName: String, subjectDto: SubjectDtoInput @payload): [EntryOfStringObject]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/VerifyController.java:56:5]"
+  verify(apiKey: String, sourceImage: Upload, targetImage: Upload, limit: Int, detProbThreshold: Double, facePlugins: String, status: Boolean): [EntryOfStringCollectionOfVerifyFacesResponse]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/VerifyController.java:100:5]"
+  verifyBase64(apiKey: String, limit: Int, detProbThreshold: Double, facePlugins: String, status: Boolean, request: VerifySourceTargetRequestInput @payload): [EntryOfStringCollectionOfVerifyFacesResponse]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/VerifyController.java:141:5]"
+  verifyEmbeddings(apiKey: String, verificationRequest: EmbeddingsVerificationRequestInput @payload): EmbeddingsVerificationProcessResponse
+}
+
+interface PageOfEmbeddingDto {
+  getTotalPages: Int
+  getTotalElements: Long
+}
+
+input PageRequestInput {
+  page: Int
+  size: Int
+}
+
+type PluginsVersionsDto {
+  age: String
+  gender: String
+  pose: String
+  detector: String
+  calculator: String
+  mask: String
+}
+
+type Query {
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:146:5]"
+  downloadImg(apiKey: String, embeddingId: ID): [Byte]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/StaticController.java:28:5]"
+  downloadImgUsingApiKeyAndEmbeddingId(apiKey: String, embeddingId: ID): [Byte]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/ConsistenceController.java:23:5]"
+  getCheckDemo: VersionConsistenceDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/ConfigController.java:21:5]"
+  getConfig: ConfigDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/EmbeddingController.java:162:5]"
+  listEmbeddings(apiKey: String, subjectName: String, pageable: PageRequestInput): Faces
+  "[/Users/amarees/IdeaProjects/CompreFace/java/api/src/main/java/com/exadel/frs/core/trainservice/controller/SubjectController.java:50:5]"
+  listSubjects(apiKey: String): [EntryOfStringObject]
+}
+
+type SubjectDto {
+  subjectName: String
+}
+
+input SubjectDtoInput {
+  subjectName: String
+}
+
+type TrainserviceDtoFacesBox {
+  probability: Double
+  xMax: Int
+  yMax: Int
+  xMin: Int
+  yMin: Int
+}
+
+scalar Upload
+
+type VerificationResult {
+  result: [FaceVerification]
+  pluginsVersions: DtoPluginsVersionsDto
+}
+
+type VerifyFacesResponse {
+  processFileData: VerifyFacesResultDto
+  faceMatches: [FaceMatch]
+  pluginsVersions: DtoPluginsVersionsDto
+}
+
+type VerifyFacesResultDto {
+  age: DtoFacesAge
+  gender: DtoFacesGender
+  pose: DtoFacesPose
+  embedding: [Double]
+  box: TrainserviceDtoFacesBox
+  executionTime: ExecutionTimeDto
+  landmarks: [[Int]]
+  mask: FacesMask
+}
+
+input VerifySourceTargetRequestInput {
+  sourceImageBase64: String
+  targetImageBase64: String
+}
+
+type VersionConsistenceDto {
+  demoFaceCollectionIsInconsistent: Boolean
+  dbIsInconsistent: Boolean
+  saveImagesToDB: Boolean
+  status: AppStatus
+}
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+directive @payload on ARGUMENT_DEFINITION
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+

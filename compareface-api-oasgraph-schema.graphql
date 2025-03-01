@@ -1,0 +1,633 @@
+type Query {
+  """
+  links
+  
+  Equivalent to GET /actuator
+  """
+  actuator: JSON
+
+  """
+  handle
+  
+  Equivalent to GET /actuator/health
+  """
+  actuatorHealth(actuatorHealthInput: JSON): JSON
+
+  """
+  downloadImg
+  
+  Equivalent to GET /api/v1/recognition/faces/{embeddingId}/img
+  """
+  apiV1RecognitionFaceImg(
+    """Image Id from collection to compare with face."""
+    embeddingId: ID!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): String
+
+  """
+  listSubjects
+  
+  Equivalent to GET /api/v1/recognition/subjects
+  """
+  apiV1RecognitionSubjects(
+    """Api key of application and model"""
+    xApiKey: String!
+  ): JSON
+
+  """
+  downloadImg
+  
+  Equivalent to GET /api/v1/static/{apiKey}/images/{embeddingId}
+  """
+  apiV1StaticImage(
+    """Api key of application and model"""
+    apiKey: String!
+
+    """Image Id from collection to compare with face."""
+    embeddingId: ID!
+  ): String
+
+  """
+  Returns configuration properties of the application
+  
+  Equivalent to GET /api/v1/config
+  """
+  configDto: ConfigDto
+
+  """
+  error
+  
+  Equivalent to GET /error
+  """
+  error: JSON
+
+  """
+  listEmbeddings
+  
+  Equivalent to GET /api/v1/recognition/faces
+  """
+  faces(
+    offset: BigInt
+    pageNumber: Int
+    pageSize: Int
+    paged: Boolean
+    sortSorted: Boolean
+    sortUnsorted: Boolean
+
+    """Person's name to whom the face belongs to."""
+    subject: String
+    unpaged: Boolean
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): Faces
+
+  """
+  handle
+  
+  Equivalent to GET /actuator/health/**
+  """
+  handleUsingGET(actuatorHealth2Input: JSON): JSON
+
+  """
+  getCheckDemo
+  
+  Equivalent to GET /api/v1/consistence/status
+  """
+  versionConsistenceDto: VersionConsistenceDto
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type ConfigDto {
+  clientMaxBodySize: BigInt
+  clientMaxFileSize: BigInt
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+type Faces {
+  faces: [EmbeddingDto]
+  pageNumber: Int
+  pageSize: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type EmbeddingDto {
+  imageId: String
+  subject: String
+}
+
+type VersionConsistenceDto {
+  dbIsInconsistent: Boolean
+  demoFaceCollectionIsInconsistent: Boolean
+  saveImagesToDB: Boolean
+  status: Status
+}
+
+enum Status {
+  OK
+  NOT_READY
+}
+
+type Mutation {
+  """
+  addEmbeddingBase64
+  
+  Equivalent to POST /api/v1/recognition/faces
+  """
+  addEmbeddingBase64UsingPOST1(
+    base64FileInput: Base64FileInput!
+
+    """The minimal percent confidence that found face is actually a face."""
+    detProbThreshold: Float
+
+    """Person's name to whom the face belongs to."""
+    subject: String
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): EmbeddingDto
+
+  """
+  createSubject
+  
+  Equivalent to POST /api/v1/recognition/subjects
+  """
+  createSubjectUsingPOST1(
+    subjectDtoInput: SubjectDtoInput!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): SubjectDto
+
+  """
+  deleteEmbeddingById
+  
+  Equivalent to DELETE /api/v1/recognition/faces/{embeddingId}
+  """
+  deleteEmbeddingByIdUsingDELETE1(
+    """Image Id from collection to compare with face."""
+    embeddingId: ID!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): EmbeddingDto
+
+  """
+  deleteEmbeddingsById
+  
+  Equivalent to POST /api/v1/recognition/faces/delete
+  """
+  deleteEmbeddingsByIdUsingPOST1(
+    apiV1RecognitionFacesDeleteInput: [ID]!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): [EmbeddingDto]
+
+  """
+  deleteSubject
+  
+  Equivalent to DELETE /api/v1/recognition/subjects/{subject}
+  """
+  deleteSubjectUsingDELETE1(
+    """Person's name to whom the face belongs to."""
+    subject: String!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): JSON
+
+  """
+  deleteSubjects
+  
+  Equivalent to DELETE /api/v1/recognition/subjects
+  """
+  deleteSubjectsUsingDELETE1(
+    """Api key of application and model"""
+    xApiKey: String!
+  ): JSON
+
+  """
+  detectBase64
+  
+  Equivalent to POST /api/v1/detection/detect
+  """
+  detectBase64UsingPOST1(
+    base64FileInput: Base64FileInput!
+
+    """The minimal percent confidence that found face is actually a face."""
+    detProbThreshold: Float
+
+    """
+    Comma-separated types of face plugins. Empty value - face plugins disabled, returns only bounding boxes
+    """
+    facePlugins: String
+
+    """Maximum number of faces to be recognized"""
+    limit: Int
+
+    """
+    Special parameter to show execution_time and plugin_version fields. Empty value - both fields eliminated, true - both fields included
+    """
+    status: Boolean
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): FacesDetectionResponseDto
+
+  """
+  error
+  
+  Equivalent to DELETE /error
+  """
+  errorUsingDELETE: JSON
+
+  """
+  error
+  
+  Equivalent to HEAD /error
+  """
+  errorUsingHEAD: JSON
+
+  """
+  error
+  
+  Equivalent to OPTIONS /error
+  """
+  errorUsingOPTIONS: JSON
+
+  """
+  error
+  
+  Equivalent to PATCH /error
+  """
+  errorUsingPATCH: JSON
+
+  """
+  error
+  
+  Equivalent to POST /error
+  """
+  errorUsingPOST: JSON
+
+  """
+  error
+  
+  Equivalent to PUT /error
+  """
+  errorUsingPUT: JSON
+
+  """
+  migrate
+  
+  Equivalent to POST /api/v1/migrate
+  """
+  migrateUsingPOST1: String
+
+  """
+  recognizeBase64
+  
+  Equivalent to POST /api/v1/recognition/faces/{embeddingId}/verify
+  """
+  recognizeBase64UsingPOST2(
+    base64FileInput: Base64FileInput!
+
+    """The minimal percent confidence that found face is actually a face."""
+    detProbThreshold: Float
+
+    """Image Id from collection to compare with face."""
+    embeddingId: ID!
+
+    """
+    Comma-separated types of face plugins. Empty value - face plugins disabled, returns only bounding boxes
+    """
+    facePlugins: String
+
+    """Maximum number of faces to be recognized"""
+    limit: Int
+
+    """
+    Special parameter to show execution_time and plugin_version fields. Empty value - both fields eliminated, true - both fields included
+    """
+    status: Boolean
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): VerificationResult
+
+  """
+  recognizeBase64
+  
+  Equivalent to POST /api/v1/recognition/recognize
+  """
+  recognizeBase64UsingPOST3(
+    base64FileInput: Base64FileInput!
+
+    """The minimal percent confidence that found face is actually a face."""
+    detProbThreshold: Float
+
+    """The parameter specifies whether to perform image detection or not"""
+    detectFaces: Boolean
+
+    """
+    Comma-separated types of face plugins. Empty value - face plugins disabled, returns only bounding boxes
+    """
+    facePlugins: String
+
+    """Maximum number of faces to be recognized"""
+    limit: Int
+
+    """Maximum number of predictions per faces"""
+    predictionCount: Int
+
+    """
+    Special parameter to show execution_time and plugin_version fields. Empty value - both fields eliminated, true - both fields included
+    """
+    status: Boolean
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): FacesRecognitionResponseDto
+
+  """
+  recognizeEmbeddings
+  
+  Equivalent to POST /api/v1/recognition/embeddings/faces/{imageId}/verify
+  """
+  recognizeEmbeddingsUsingPOST2(
+    embeddingsRecognitionRequestInput: EmbeddingsRecognitionRequestInput!
+
+    """Image Id from collection to compare with face."""
+    imageId: ID!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): EmbeddingsVerificationProcessResponse
+
+  """
+  recognizeEmbeddings
+  
+  Equivalent to POST /api/v1/recognition/embeddings/recognize
+  """
+  recognizeEmbeddingsUsingPOST3(
+    embeddingsRecognitionRequestInput: EmbeddingsRecognitionRequestInput!
+
+    """Maximum number of predictions per faces"""
+    predictionCount: Int
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): EmbeddingsRecognitionProcessResponse
+
+  """
+  removeAllSubjectEmbeddings
+  
+  Equivalent to DELETE /api/v1/recognition/faces
+  """
+  removeAllSubjectEmbeddingsUsingDELETE1(
+    """Person's name to whom the face belongs to."""
+    subject: String
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): JSON
+
+  """
+  renameSubject
+  
+  Equivalent to PUT /api/v1/recognition/subjects/{subject}
+  """
+  renameSubjectUsingPUT1(
+    """Person's name to whom the face belongs to."""
+    subject: String!
+    subjectDtoInput: SubjectDtoInput!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): JSON
+
+  """
+  verifyBase64
+  
+  Equivalent to POST /api/v1/verification/verify
+  """
+  verifyBase64UsingPOST1(
+    """The minimal percent confidence that found face is actually a face."""
+    detProbThreshold: Float
+
+    """
+    Comma-separated types of face plugins. Empty value - face plugins disabled, returns only bounding boxes
+    """
+    facePlugins: String
+
+    """Maximum number of faces to be recognized"""
+    limit: Int
+
+    """
+    Special parameter to show execution_time and plugin_version fields. Empty value - both fields eliminated, true - both fields included
+    """
+    status: Boolean
+    verifySourceTargetRequestInput: VerifySourceTargetRequestInput!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): JSON
+
+  """
+  verifyEmbeddings
+  
+  Equivalent to POST /api/v1/verification/embeddings/verify
+  """
+  verifyEmbeddingsUsingPOST1(
+    embeddingsVerificationRequestInput: EmbeddingsVerificationRequestInput!
+
+    """Api key of application and model"""
+    xApiKey: String!
+  ): EmbeddingsVerificationProcessResponse
+}
+
+input Base64FileInput {
+  file: String
+}
+
+type SubjectDto {
+  subject: String
+}
+
+input SubjectDtoInput {
+  subject: String
+}
+
+type FacesDetectionResponseDto {
+  pluginsVersions: PluginsVersionsDto
+  result: [FindFacesResultDto]
+}
+
+type PluginsVersionsDto {
+  age: String
+  calculator: String
+  detector: String
+  gender: String
+  mask: String
+  pose: String
+}
+
+type FindFacesResultDto {
+  age: FacesAgeDto
+  box: FacesBox
+  embedding: [Float]
+  executionTime: ExecutionTimeDto
+  gender: FacesGenderDto
+  landmarks: [[Int]]
+  mask: FacesMaskDto
+  pose: FacesPoseDto
+}
+
+type FacesAgeDto {
+  high: Int
+  low: Int
+  probability: Float
+}
+
+type FacesBox {
+  probability: Float
+  xMax: Int
+  xMin: Int
+  yMax: Int
+  yMin: Int
+}
+
+type ExecutionTimeDto {
+  age: Float
+  calculator: Float
+  detector: Float
+  gender: Float
+  mask: Float
+  pose: Float
+}
+
+type FacesGenderDto {
+  probability: Float
+  value: String
+}
+
+type FacesMaskDto {
+  probability: Float
+  value: String
+}
+
+type FacesPoseDto {
+  pitch: Float
+  roll: Float
+  yaw: Float
+}
+
+type VerificationResult {
+  pluginsVersions: PluginsVersionsDto
+  result: [FaceVerification]
+}
+
+type FaceVerification {
+  age: FacesAge
+  box: FacesBox
+  embedding: [Float]
+  executionTime: ExecutionTimeDto
+  gender: FacesGender
+  landmarks: [[Int]]
+  mask: FacesMask
+  pose: FacesPose
+  similarity: Float
+  subject: String
+}
+
+type FacesAge {
+  high: Int
+  low: Int
+  probability: Float
+}
+
+type FacesGender {
+  probability: Float
+  value: String
+}
+
+type FacesMask {
+  probability: Float
+  value: String
+}
+
+type FacesPose {
+  pitch: Float
+  roll: Float
+  yaw: Float
+}
+
+type FacesRecognitionResponseDto {
+  pluginsVersions: PluginsVersionsDto
+  result: [FacePredictionResultDto]
+}
+
+type FacePredictionResultDto {
+  age: FacesAgeDto
+  box: FacesBox
+  embedding: [Float]
+  executionTime: ExecutionTimeDto
+  gender: FacesGenderDto
+  landmarks: [[Int]]
+  mask: FacesMaskDto
+  pose: FacesPoseDto
+  subjects: [FaceSimilarityDto]
+}
+
+type FaceSimilarityDto {
+  similarity: Float
+  subject: String
+}
+
+type EmbeddingsVerificationProcessResponse {
+  result: [EmbeddingVerificationProcessResult]
+}
+
+type EmbeddingVerificationProcessResult {
+  embedding: [Float]
+  similarity: Float
+}
+
+input EmbeddingsRecognitionRequestInput {
+  embeddings: [[Float]]
+}
+
+type EmbeddingsRecognitionProcessResponse {
+  result: [EmbeddingRecognitionProcessResult]
+}
+
+type EmbeddingRecognitionProcessResult {
+  embedding: [Float]
+  similarities: [EmbeddingSimilarityResult]
+}
+
+type EmbeddingSimilarityResult {
+  similarity: Float
+  subject: String
+}
+
+input VerifySourceTargetRequestInput {
+  sourceImage: String
+  targetImage: String
+}
+
+input EmbeddingsVerificationRequestInput {
+  source: [Float]
+  targets: [[Float]]
+}

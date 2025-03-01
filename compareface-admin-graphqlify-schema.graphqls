@@ -1,0 +1,289 @@
+input AppCreateDtoInput {
+  name: String
+}
+
+type AppOwnerDto {
+  userId: String
+  firstName: String
+  lastName: String
+}
+
+type AppResponseDto {
+  id: String
+  name: String
+  apiKey: String
+  role: String
+  owner: AppOwnerDto
+}
+
+enum AppRole {
+  OWNER
+  ADMINISTRATOR
+  USER
+}
+
+enum AppStatus {
+  OK
+  NOT_READY
+}
+
+type AppStatusResponseDto {
+  status: AppStatus
+}
+
+input AppUpdateDtoInput {
+  name: String
+}
+
+input ChangePasswordDtoInput {
+  oldPassword: String
+  newPassword: String
+}
+
+type ConfigDto {
+  mailServiceEnabled: Boolean
+}
+
+scalar Date
+
+type EntryOfStringObject {
+  key: String
+  value: JSON
+}
+
+type EntryOfStringString {
+  key: String
+  value: String
+}
+
+input EntryOfStringStringInput {
+  key: String
+  value: String
+}
+
+input ForgotPasswordDtoInput {
+  email: String
+}
+
+enum GlobalRole {
+  OWNER
+  ADMINISTRATOR
+  USER
+}
+
+scalar JSON
+
+scalar LocalDateTime
+
+scalar Long
+
+input ModelCloneDtoInput {
+  name: String
+}
+
+input ModelCreateDtoInput {
+  name: String
+  type: String
+}
+
+type ModelResponseDto {
+  id: String
+  name: String
+  apiKey: String
+  type: ModelType
+  subjectCount: Long
+  imageCount: Long
+  createdDate: LocalDateTime
+}
+
+type ModelStatisticProjection {
+  requestCount: Long
+  createdDate: Date
+}
+
+enum ModelType {
+  RECOGNITION
+  DETECTION
+  VERIFY
+}
+
+input ModelUpdateDtoInput {
+  name: String
+}
+
+type Mutation {
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:253:5]"
+  assignAndSendResetPasswordToken(forgotPasswordDto: ForgotPasswordDtoInput @payload): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:103:5]"
+  changePassword(changePasswordDto: ChangePasswordDtoInput @payload): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:109:5]"
+  cloneModel(appGuid: String, guid: String, modelCloneDto: ModelCloneDtoInput @payload): ModelResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:72:5]"
+  createApp(appCreateDto: AppCreateDtoInput @payload): AppResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:84:5]"
+  createModel(appGuid: String, modelCreateDto: ModelCreateDtoInput @payload): ModelResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:121:5]"
+  createUser(userCreateDto: UserCreateDtoInput @payload): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:118:5]"
+  deleteApp(guid: String): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:168:5]"
+  deleteModel(appGuid: String, guid: String): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:164:5]"
+  deleteUser(userGuid: String, replacer: String): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:174:5]"
+  deleteUserApp(guid: String, userGuid: String): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:147:5]"
+  inviteUser(guid: String, userInviteDto: UserInviteDtoInput @payload): UserRoleResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/system/security/endpoint/CustomTokenEndpoint.java:36:5]"
+  postAccessToken(parameters: [EntryOfStringStringInput]): OAuth2AccessToken
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:107:5]"
+  regenerateApiKey(guid: String): AppResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:153:5]"
+  regenerateApiKeyUsingAppGuidAndGuid(appGuid: String, guid: String): ModelResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:263:5]"
+  resetPassword(resetPasswordDto: ResetPasswordDtoInput @payload, token: String): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/system/security/endpoint/RevokeTokenEndpoint.java:29:5]"
+  revokeToken: Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:89:5]"
+  updateApp(guid: String, appUpdateDto: AppUpdateDtoInput @payload): AppResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:131:5]"
+  updateModel(appGuid: String, guid: String, modelUpdateDto: ModelUpdateDtoInput @payload): ModelResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:150:5]"
+  updateUser(userUpdateDto: UserUpdateDtoInput @payload): UserResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:160:5]"
+  updateUserAppRole(guid: String, userRoleUpdateDto: UserRoleUpdateDtoInput @payload): UserRoleResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:217:5]"
+  updateUserGlobalRole(userRoleUpdateDto: UserRoleUpdateDtoInput @payload): UserRoleResponseDto
+}
+
+interface OAuth2AccessToken {
+  getAdditionalInformation: [EntryOfStringObject]
+  getScope: [String]
+  getRefreshToken: OAuth2RefreshToken
+  getTokenType: String
+  isExpired: Boolean
+  getExpiration: Date
+  getExpiresIn: Int
+  getValue: String
+}
+
+interface OAuth2RefreshToken {
+  getValue: String
+}
+
+type Query {
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:184:5]"
+  autocomplete(query: String): UserAutocompleteDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:198:5]"
+  confirmRegistration(token: String): Void
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:54:5]"
+  getApp(guid: String): AppResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:127:5]"
+  getAppRolesToAssign(guid: String): [AppRole]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppStatusController.java:26:5]"
+  getAppStatus: AppStatusResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:136:5]"
+  getAppUsers(guid: String, search: String): [UserRoleResponseDto]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/AppController.java:65:5]"
+  getApps: [AppResponseDto]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ConfigController.java:19:5]"
+  getConfig: ConfigDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:207:5]"
+  getDemoModel: [EntryOfStringString]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:231:5]"
+  getGlobalRoles: [GlobalRole]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:237:5]"
+  getGlobalRolesToAssign: [GlobalRole]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:61:5]"
+  getModel(appGuid: String, guid: String): ModelResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:74:5]"
+  getModels(appGuid: String): [ModelResponseDto]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/ModelController.java:181:5]"
+  getSummarizedByDayModelStatistics(appGuid: String, guid: String): [ModelStatisticProjection]
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:92:5]"
+  getUser: UserResponseDto
+  "[/Users/amarees/IdeaProjects/CompreFace/java/admin/src/main/java/com/exadel/frs/controller/UserController.java:244:5]"
+  getUsers: [UserRoleResponseDto]
+}
+
+input ResetPasswordDtoInput {
+  password: String
+}
+
+type UserAutocompleteDto {
+  query: String
+  length: Int
+  results: [UserResponseDto]
+}
+
+input UserCreateDtoInput {
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  isAllowStatistics: Boolean
+}
+
+input UserInviteDtoInput {
+  role: String
+  userEmail: String
+}
+
+type UserResponseDto {
+  userId: String
+  email: String
+  firstName: String
+  lastName: String
+}
+
+type UserRoleResponseDto {
+  userId: String
+  firstName: String
+  lastName: String
+  role: String
+  email: String
+}
+
+input UserRoleUpdateDtoInput {
+  userId: String
+  role: String
+}
+
+input UserUpdateDtoInput {
+  firstName: String
+  lastName: String
+}
+
+type Void {
+  result: Int
+}
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+directive @payload on ARGUMENT_DEFINITION
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+

@@ -1,0 +1,624 @@
+type Query {
+  """
+  Returns the pet  or a 404 error.
+  
+  Equivalent to GET /pets/{petId}
+  """
+  getPet(
+    """The ID of the pet."""
+    petId: Int!
+  ): Pet
+
+  """
+  Produces sample error response.
+  
+  Equivalent to GET /oops
+  """
+  oops: String
+
+  """
+  Returns the pet owner or a 404 error.
+  
+  Equivalent to GET /owners/{ownerId}
+  """
+  owner(
+    """The ID of the pet owner."""
+    ownerId: Int!
+  ): Owner
+
+  """
+  Returns an array of pet owners.
+  
+  Equivalent to GET /owners
+  """
+  owners(
+    """Last name."""
+    lastName: String
+  ): [Owner]
+
+  """
+  Returns the pet or a 404 error.
+  
+  Equivalent to GET /owners/{ownerId}/pets/{petId}
+  """
+  pet(
+    """The ID of the pet owner."""
+    ownerId: Int!
+
+    """The ID of the pet."""
+    petId: Int!
+  ): Pet
+
+  """
+  Returns the pet type or a 404 error.
+  
+  Equivalent to GET /pettypes/{petTypeId}
+  """
+  petType(
+    """The ID of the pet type."""
+    petTypeId: Int!
+  ): PetType
+
+  """
+  Returns an array of pet .
+  
+  Equivalent to GET /pets
+  """
+  pets2: [Pet]
+
+  """
+  Returns an array of pet types.
+  
+  Equivalent to GET /pettypes
+  """
+  pettypes: [PetType]
+
+  """
+  Returns an array of specialty .
+  
+  Equivalent to GET /specialties
+  """
+  specialties: [Specialty]
+
+  """
+  Returns the specialty or a 404 error.
+  
+  Equivalent to GET /specialties/{specialtyId}
+  """
+  specialty(
+    """The ID of the speciality."""
+    specialtyId: Int!
+  ): Specialty
+
+  """
+  Returns the vet or a 404 error.
+  
+  Equivalent to GET /vets/{vetId}
+  """
+  vet(
+    """The ID of the vet."""
+    vetId: Int!
+  ): Vet
+
+  """
+  Returns an array of vets.
+  
+  Equivalent to GET /vets
+  """
+  vets: [Vet]
+
+  """
+  Returns the visit or a 404 error.
+  
+  Equivalent to GET /visits/{visitId}
+  """
+  visit(
+    """The ID of the visit."""
+    visitId: Int!
+  ): Visit
+
+  """
+  Returns an array of visit .
+  
+  Equivalent to GET /visits
+  """
+  visits2: [Visit]
+}
+
+"""A pet."""
+type Pet {
+  """The date of birth of the pet."""
+  birthDate: String!
+
+  """The ID of the pet."""
+  id: Int!
+
+  """The name of the pet."""
+  name: String!
+
+  """The ID of the pet's owner."""
+  ownerId: Int
+
+  """A pet type."""
+  type: PetType!
+
+  """Vet visit bookings for this pet."""
+  visits: [Visit]!
+}
+
+"""A pet type."""
+type PetType {
+  """The ID of the pet type."""
+  id: Int!
+
+  """The name of the pet type."""
+  name: String!
+}
+
+"""A booking for a vet visit."""
+type Visit {
+  """The date of the visit."""
+  date: String
+
+  """The description for the visit."""
+  description: String!
+
+  """The ID of the visit."""
+  id: Int!
+
+  """The ID of the pet."""
+  petId: Int
+}
+
+"""A pet owner."""
+type Owner {
+  """The postal address of the pet owner."""
+  address: String!
+
+  """The city of the pet owner."""
+  city: String!
+
+  """The first name of the pet owner."""
+  firstName: String!
+
+  """The ID of the pet owner."""
+  id: Int
+
+  """The last name of the pet owner."""
+  lastName: String!
+
+  """The pets owned by this individual including any booked vet visits."""
+  pets: [Pet]!
+
+  """The telephone number of the pet owner."""
+  telephone: String!
+}
+
+"""Fields of specialty of vets."""
+type Specialty {
+  """The ID of the specialty."""
+  id: Int!
+
+  """The name of the specialty."""
+  name: String!
+}
+
+"""A veterinarian."""
+type Vet {
+  """The first name of the vet."""
+  firstName: String!
+
+  """The ID of the vet."""
+  id: Int!
+
+  """The last name of the vet."""
+  lastName: String!
+
+  """The specialties of the vet."""
+  specialties: [Specialty]!
+}
+
+type Mutation {
+  """
+  Records the details of a new pet owner.
+  
+  Equivalent to POST /owners
+  """
+  addOwner(
+    """Editable fields of a pet owner."""
+    ownerFieldsInput: OwnerFieldsInput!
+  ): Owner
+
+  """
+  Creates a pet .
+  
+  Equivalent to POST /pets
+  """
+  addPet(
+    """A pet."""
+    petInput: PetInput!
+  ): Pet
+
+  """
+  Records the details of a new pet.
+  
+  Equivalent to POST /owners/{ownerId}/pets
+  """
+  addPetToOwner(
+    """The ID of the pet owner."""
+    ownerId: Int!
+
+    """Editable fields of a pet."""
+    petFieldsInput: PetFieldsInput!
+  ): Pet
+
+  """
+  Creates a pet type .
+  
+  Equivalent to POST /pettypes
+  """
+  addPetType(
+    """A pet type."""
+    petTypeInput: PetTypeInput!
+  ): PetType
+
+  """
+  Creates a specialty .
+  
+  Equivalent to POST /specialties
+  """
+  addSpecialty(
+    """Fields of specialty of vets."""
+    specialtyInput: SpecialtyInput!
+  ): Specialty
+
+  """
+  Creates a user.
+  
+  Equivalent to POST /users
+  """
+  addUser(
+    """An user."""
+    userInput: UserInput!
+  ): User
+
+  """
+  Creates a vet .
+  
+  Equivalent to POST /vets
+  """
+  addVet(
+    """A veterinarian."""
+    vetInput: VetInput!
+  ): Vet
+
+  """
+  Creates a visit.
+  
+  Equivalent to POST /visits
+  """
+  addVisit(
+    """A booking for a vet visit."""
+    visitInput: VisitInput!
+  ): Visit
+
+  """
+  Records the details of a new vet visit.
+  
+  Equivalent to POST /owners/{ownerId}/pets/{petId}/visits
+  """
+  addVisitToOwner(
+    """The ID of the pet owner."""
+    ownerId: Int!
+
+    """The ID of the pet."""
+    petId: Int!
+
+    """Editable fields of a vet visit."""
+    visitFieldsInput: VisitFieldsInput!
+  ): Visit
+
+  """
+  Returns the owner or a 404 error.
+  
+  Equivalent to DELETE /owners/{ownerId}
+  """
+  deleteOwner(
+    """The ID of the owner."""
+    ownerId: Int!
+  ): Owner
+
+  """
+  Returns the pet or a 404 error.
+  
+  Equivalent to DELETE /pets/{petId}
+  """
+  deletePet(
+    """The ID of the pet."""
+    petId: Int!
+  ): Pet
+
+  """
+  Returns the pet type or a 404 error.
+  
+  Equivalent to DELETE /pettypes/{petTypeId}
+  """
+  deletePetType(
+    """The ID of the pet type."""
+    petTypeId: Int!
+  ): PetType
+
+  """
+  Returns the specialty or a 404 error.
+  
+  Equivalent to DELETE /specialties/{specialtyId}
+  """
+  deleteSpecialty(
+    """The ID of the specialty."""
+    specialtyId: Int!
+  ): Specialty
+
+  """
+  Returns the vet or a 404 error.
+  
+  Equivalent to DELETE /vets/{vetId}
+  """
+  deleteVet(
+    """The ID of the vet."""
+    vetId: Int!
+  ): Vet
+
+  """
+  Returns the visit or a 404 error.
+  
+  Equivalent to DELETE /visits/{visitId}
+  """
+  deleteVisit(
+    """The ID of the visit."""
+    visitId: Int!
+  ): Visit
+
+  """
+  Updates the pet owner record with the specified details.
+  
+  Equivalent to PUT /owners/{ownerId}
+  """
+  updateOwner(
+    """Editable fields of a pet owner."""
+    ownerFieldsInput: OwnerFieldsInput!
+
+    """The ID of the pet owner."""
+    ownerId: Int!
+  ): Owner
+
+  """
+  Updates the pet record with the specified details.
+  
+  Equivalent to PUT /owners/{ownerId}/pets/{petId}
+  """
+  updateOwnersPet(
+    """The ID of the pet owner."""
+    ownerId: Int!
+
+    """Editable fields of a pet."""
+    petFieldsInput: PetFieldsInput!
+
+    """The ID of the pet."""
+    petId: Int!
+  ): String
+
+  """
+  Returns the pet or a 404 error.
+  
+  Equivalent to PUT /pets/{petId}
+  """
+  updatePet(
+    """The ID of the pet."""
+    petId: Int!
+
+    """A pet."""
+    petInput: PetInput!
+  ): Pet
+
+  """
+  Returns the pet type or a 404 error.
+  
+  Equivalent to PUT /pettypes/{petTypeId}
+  """
+  updatePetType(
+    """The ID of the pet type."""
+    petTypeId: Int!
+
+    """A pet type."""
+    petTypeInput: PetTypeInput!
+  ): PetType
+
+  """
+  Returns the specialty or a 404 error.
+  
+  Equivalent to PUT /specialties/{specialtyId}
+  """
+  updateSpecialty(
+    """The ID of the specialty."""
+    specialtyId: Int!
+
+    """Fields of specialty of vets."""
+    specialtyInput: SpecialtyInput!
+  ): Specialty
+
+  """
+  Returns the vet or a 404 error.
+  
+  Equivalent to PUT /vets/{vetId}
+  """
+  updateVet(
+    """The ID of the vet."""
+    vetId: Int!
+
+    """A veterinarian."""
+    vetInput: VetInput!
+  ): Vet
+
+  """
+  Returns the visit or a 404 error.
+  
+  Equivalent to PUT /visits/{visitId}
+  """
+  updateVisit(
+    """The ID of the visit."""
+    visitId: Int!
+
+    """A booking for a vet visit."""
+    visitInput: VisitInput!
+  ): Visit
+}
+
+"""Editable fields of a pet owner."""
+input OwnerFieldsInput {
+  """The postal address of the pet owner."""
+  address: String!
+
+  """The city of the pet owner."""
+  city: String!
+
+  """The first name of the pet owner."""
+  firstName: String!
+
+  """The last name of the pet owner."""
+  lastName: String!
+
+  """The telephone number of the pet owner."""
+  telephone: String!
+}
+
+"""A pet."""
+input PetInput {
+  """The date of birth of the pet."""
+  birthDate: String!
+
+  """The ID of the pet."""
+  id: Int!
+
+  """The name of the pet."""
+  name: String!
+
+  """The ID of the pet's owner."""
+  ownerId: Int
+
+  """A pet type."""
+  type: PetTypeInput!
+
+  """Vet visit bookings for this pet."""
+  visits: [VisitInput]!
+}
+
+"""A pet type."""
+input PetTypeInput {
+  """The ID of the pet type."""
+  id: Int!
+
+  """The name of the pet type."""
+  name: String!
+}
+
+"""A booking for a vet visit."""
+input VisitInput {
+  """The date of the visit."""
+  date: String
+
+  """The description for the visit."""
+  description: String!
+
+  """The ID of the visit."""
+  id: Int!
+
+  """The ID of the pet."""
+  petId: Int
+}
+
+"""Editable fields of a pet."""
+input PetFieldsInput {
+  """The date of birth of the pet."""
+  birthDate: String!
+
+  """The name of the pet."""
+  name: String!
+
+  """A pet type."""
+  type: PetTypeInput!
+}
+
+"""Fields of specialty of vets."""
+input SpecialtyInput {
+  """The ID of the specialty."""
+  id: Int!
+
+  """The name of the specialty."""
+  name: String!
+}
+
+"""An user."""
+type User {
+  """Indicates if the user is enabled"""
+  enabled: Boolean
+
+  """The password"""
+  password: String
+
+  """The roles of an user"""
+  roles: [Role]
+
+  """The username"""
+  username: String!
+}
+
+"""A role."""
+type Role {
+  """The role's name"""
+  name: String!
+}
+
+"""An user."""
+input UserInput {
+  """Indicates if the user is enabled"""
+  enabled: Boolean
+
+  """The password"""
+  password: String
+
+  """The roles of an user"""
+  roles: [RoleInput]
+
+  """The username"""
+  username: String!
+}
+
+"""A role."""
+input RoleInput {
+  """The role's name"""
+  name: String!
+}
+
+"""A veterinarian."""
+input VetInput {
+  """The first name of the vet."""
+  firstName: String!
+
+  """The ID of the vet."""
+  id: Int!
+
+  """The last name of the vet."""
+  lastName: String!
+
+  """The specialties of the vet."""
+  specialties: [SpecialtyInput]!
+}
+
+"""Editable fields of a vet visit."""
+input VisitFieldsInput {
+  """The date of the visit."""
+  date: String
+
+  """The description for the visit."""
+  description: String!
+}

@@ -1,0 +1,486 @@
+type Query {
+  """
+  getCartItems
+  
+  Equivalent to GET /cart/{id}
+  """
+  cart(
+    """id"""
+    id: String!
+  ): [CartItem]
+
+  """
+  index
+  
+  Equivalent to GET /group
+  """
+  group: [GroupResource]
+
+  """
+  view
+  
+  Equivalent to GET /group/{id}
+  """
+  groupResource(
+    """id"""
+    id: BigInt!
+  ): GroupResource
+
+  """
+  index
+  
+  Equivalent to GET /order
+  """
+  order2: [OrderResource]
+
+  """
+  view
+  
+  Equivalent to GET /order/{id}
+  """
+  orderResource(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+
+  """
+  index
+  
+  Equivalent to GET /product
+  """
+  product2: [ProductResource]
+
+  """
+  viewImages
+  
+  Equivalent to GET /product/{id}/images
+  """
+  productImages(
+    """id"""
+    id: String!
+  ): [ProductImage]
+
+  """
+  serveFile
+  
+  Equivalent to GET /product/image/{id}
+  """
+  resource(
+    """id"""
+    id: String!
+  ): Resource
+
+  """
+  view
+  
+  Equivalent to GET /product/{id}
+  """
+  resourceSupport(
+    """id"""
+    id: BigInt!
+  ): ResourceSupport
+}
+
+type CartItem {
+  productId: BigInt
+  quantity: Int
+  variantId: BigInt
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+type GroupResource {
+  groupName: String
+  id: BigInt
+  links: [Link]
+  price: String
+  variants: [GroupVariant]
+}
+
+type Link {
+  href: String
+  rel: String
+  templated: Boolean
+}
+
+type GroupVariant {
+  group: ProductGroup
+  id: BigInt
+  variantName: String
+}
+
+type ProductGroup {
+  created: String
+  groupName: String
+  groupVariants: [GroupVariant]
+  id: BigInt
+  price: String
+}
+
+type OrderResource {
+  address: String
+  city: String
+  comment: String
+  created: String
+  id: BigInt
+  items: [OrderItem]
+  links: [Link]
+  name: String
+  status: String
+  totalPrice: String
+  type: String
+  zip: String
+}
+
+type OrderItem {
+  groupVariant: GroupVariant
+  id: Int
+  order: Order
+  price: String
+  product: Product
+}
+
+type Order {
+  address: String
+  city: String
+  comment: String
+  created: String
+  id: BigInt
+  items: [OrderItem]
+  name: String
+  status: String
+  totalPrice: String
+  type: String
+  zip: String
+}
+
+type Product {
+  created: String
+  description: String
+  group: ProductGroup
+  id: BigInt
+  name: String
+  price: String
+  userId: String
+}
+
+type ProductResource {
+  description: String
+  group: JSON
+  id: BigInt
+  links: [Link]
+  name: String
+  price: String
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type ProductImage {
+  id: BigInt
+  path: String
+  productId: BigInt
+}
+
+type Resource {
+  description: String
+  file: File
+  filename: String
+  inputStream: JSON
+  open: Boolean
+  readable: Boolean
+  uri: URI
+  url: URL
+}
+
+type File {
+  absolute: Boolean
+  absoluteFile: File
+  absolutePath: String
+  canonicalFile: File
+  canonicalPath: String
+  directory: Boolean
+  file: Boolean
+  freeSpace: BigInt
+  hidden: Boolean
+  name: String
+  parent: String
+  parentFile: File
+  path: String
+  totalSpace: BigInt
+  usableSpace: BigInt
+}
+
+type URI {
+  absolute: Boolean
+  authority: String
+  fragment: String
+  host: String
+  opaque: Boolean
+  path: String
+  port: Int
+  query: String
+  rawAuthority: String
+  rawFragment: String
+  rawPath: String
+  rawQuery: String
+  rawSchemeSpecificPart: String
+  rawUserInfo: String
+  scheme: String
+  schemeSpecificPart: String
+  userInfo: String
+}
+
+type URL {
+  authority: String
+  content: JSON
+  defaultPort: Int
+  file: String
+  host: String
+  path: String
+  port: Int
+  protocol: String
+  query: String
+  ref: String
+  userInfo: String
+}
+
+type ResourceSupport {
+  links: [Link]
+}
+
+type Mutation {
+  """
+  addProduct
+  
+  Equivalent to POST /cart/{id}
+  """
+  addProductUsingPOST(
+    cartItemInput: CartItemInput!
+
+    """id"""
+    id: String!
+  ): String
+
+  """
+  createOrder
+  
+  Equivalent to POST /cart/{id}/order
+  """
+  createOrderUsingPOST(
+    """id"""
+    id: String!
+    orderInput: OrderInput!
+  ): OrderResource
+
+  """
+  create
+  
+  Equivalent to POST /cart/
+  """
+  createUsingPOST: String
+
+  """
+  create
+  
+  Equivalent to POST /group
+  """
+  createUsingPOST1(productGroupInput: ProductGroupInput!): ProductGroup
+
+  """
+  create
+  
+  Equivalent to POST /order
+  """
+  createUsingPOST2(orderInput: OrderInput!): Order
+
+  """
+  create
+  
+  Equivalent to POST /product
+  """
+  createUsingPOST3(productInput: ProductInput!): Product
+
+  """
+  edit
+  
+  Equivalent to POST /group/{id}
+  """
+  editUsingPOST(
+    """id"""
+    id: BigInt!
+    productGroupInput: ProductGroupInput!
+  ): ProductGroup
+
+  """
+  edit
+  
+  Equivalent to POST /product/{id}
+  """
+  editUsingPOST2(
+    """id"""
+    id: BigInt!
+    productInput: ProductInput!
+  ): Product
+
+  """
+  handleFileUpload
+  
+  Equivalent to POST /product/{id}/uploadimage
+  """
+  handleFileUploadUsingPOST(
+    """id"""
+    id: String!
+    productUploadimageInput: ProductUploadimageInput!
+  ): String
+
+  """
+  removeItem
+  
+  Equivalent to DELETE /cart/{id}/{product_id}
+  """
+  removeItemUsingDELETE(
+    """id"""
+    id: String!
+
+    """product_id"""
+    productId: String!
+  ): String
+
+  """
+  setProductQuantity
+  
+  Equivalent to POST /cart/{id}/quantity
+  """
+  setProductQuantityUsingPOST(
+    cartItemInput: CartItemInput!
+
+    """id"""
+    id: String!
+  ): String
+
+  """
+  view
+  
+  Equivalent to DELETE /order/{id}
+  """
+  viewUsingDELETE(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+
+  """
+  view
+  
+  Equivalent to HEAD /order/{id}
+  """
+  viewUsingHEAD(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+
+  """
+  view
+  
+  Equivalent to OPTIONS /order/{id}
+  """
+  viewUsingOPTIONS(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+
+  """
+  view
+  
+  Equivalent to PATCH /order/{id}
+  """
+  viewUsingPATCH(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+
+  """
+  view
+  
+  Equivalent to POST /order/{id}
+  """
+  viewUsingPOST(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+
+  """
+  view
+  
+  Equivalent to PUT /order/{id}
+  """
+  viewUsingPUT(
+    """id"""
+    id: BigInt!
+  ): OrderResource
+}
+
+input CartItemInput {
+  productId: BigInt
+  quantity: Int
+  variantId: BigInt
+}
+
+input OrderInput {
+  address: String
+  city: String
+  comment: String
+  created: String
+  id: BigInt
+  items: [OrderItemInput]
+  name: String
+  status: String
+  totalPrice: String
+  type: String
+  zip: String
+}
+
+input OrderItemInput {
+  groupVariant: GroupVariantInput
+  id: Int
+  order: OrderInput
+  price: String
+  product: ProductInput
+}
+
+input GroupVariantInput {
+  group: ProductGroupInput
+  id: BigInt
+  variantName: String
+}
+
+input ProductGroupInput {
+  created: String
+  groupName: String
+  groupVariants: [GroupVariantInput]
+  id: BigInt
+  price: String
+}
+
+input ProductInput {
+  created: String
+  description: String
+  group: ProductGroupInput
+  id: BigInt
+  name: String
+  price: String
+  userId: String
+}
+
+input ProductUploadimageInput {
+  """file"""
+  file: Upload!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

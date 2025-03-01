@@ -1,0 +1,199 @@
+type AccountDTO {
+  id: Long
+  accountNumber: String
+  accountType: String
+}
+
+input AccountDTOInput {
+  id: Long
+  accountNumber: String
+  accountType: String
+}
+
+scalar BigDecimal
+
+scalar JSON
+
+input JwtUserDTOInput {
+  email: String
+  password: String
+}
+
+scalar LocalDate
+
+scalar LocalDateTime
+
+scalar Long
+
+type Mutation {
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/account/AccountController.java:77:9]"
+  create(apiVersion: String, dto: AccountDTOInput @payload): ResponseOfAccountDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/user/UserAccountController.java:62:9]"
+  createUsingApiVersionAndDto(apiVersion: String, dto: UserAccountDTOInput @payload): ResponseOfUserAccountDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/user/UserController.java:56:9]"
+  createReturnsResponseOfUserDTO(apiVersion: String, dto: UserDTOInput @payload): ResponseOfUserDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/travel/TravelController.java:102:9]"
+  createUsingApiVersionAndApiKeyAndDto(apiVersion: String, apiKey: String, dto: TravelDTOInput @payload): ResponseOfTravelDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/travel/TravelController.java:396:9]"
+  delete(apiVersion: String, apiKey: String, travelId: Long): ResponseOfString
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/security/AuthenticationController.java:71:9]"
+  generateTokenJwt(apiVersion: String, dto: JwtUserDTOInput @payload): ResponseOfTokenDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/travel/TravelController.java:170:9]"
+  update(apiVersion: String, apiKey: String, dto: TravelDTOInput @payload): ResponseOfTravelDTO
+}
+
+input PageRequestInput {
+  page: Int
+  size: Int
+}
+
+type Query {
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/statistic/StatisticController.java:68:9]"
+  create(apiVersion: String, apiKey: String): ResponseOfStatisticDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/travel/TravelController.java:231:9]"
+  findAllBetweenDates(apiVersion: String, apiKey: String, startDate: LocalDate, endDate: LocalDate, pageable: PageRequestInput): ResponseOfCollectionOfTravelDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/account/AccountController.java:124:9]"
+  findByAccountNumber(apiVersion: String, apiKey: String, accountNumber: String): ResponseOfCollectionOfAccountDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/account/AccountController.java:177:9]"
+  findById(apiVersion: String, apiKey: String, accountId: Long): ResponseOfAccountDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/travel/TravelController.java:348:9]"
+  findByIdUsingApiVersionAndApiKeyAndTravelIdAndFields(apiVersion: String, apiKey: String, travelId: Long, fields: String): ResponseOfTravelDTO
+  "[/Users/amarees/IdeaProjects/travels-java-api/src/main/java/io/github/mariazevedo88/travelsjavaapi/controller/v1/travel/TravelController.java:294:9]"
+  findByOrderNumber(apiVersion: String, apiKey: String, travelOrderNumber: String): ResponseOfCollectionOfTravelDTO
+}
+
+type ResponseOfAccountDTO {
+  data: AccountDTO
+  errors: JSON
+}
+
+type ResponseOfCollectionOfAccountDTO {
+  data: [AccountDTO]
+  errors: JSON
+}
+
+type ResponseOfCollectionOfTravelDTO {
+  data: [TravelDTO]
+  errors: JSON
+}
+
+type ResponseOfStatisticDTO {
+  data: StatisticDTO
+  errors: JSON
+}
+
+type ResponseOfString {
+  data: String
+  errors: JSON
+}
+
+type ResponseOfTokenDTO {
+  data: TokenDTO
+  errors: JSON
+}
+
+type ResponseOfTravelDTO {
+  data: TravelDTO
+  errors: JSON
+}
+
+type ResponseOfUserAccountDTO {
+  data: UserAccountDTO
+  errors: JSON
+}
+
+type ResponseOfUserDTO {
+  data: UserDTO
+  errors: JSON
+}
+
+type StatisticDTO {
+  id: Long
+  sum: BigDecimal
+  avg: BigDecimal
+  max: BigDecimal
+  min: BigDecimal
+  count: Long
+}
+
+type TokenDTO {
+  token: String
+}
+
+type TravelDTO {
+  id: Long
+  orderNumber: String
+  startDate: LocalDateTime
+  endDate: LocalDateTime
+  amount: BigDecimal
+  type: String
+  accountId: Long
+}
+
+input TravelDTOInput {
+  id: Long
+  orderNumber: String
+  startDate: LocalDateTime
+  endDate: LocalDateTime
+  amount: BigDecimal
+  type: String
+  accountId: Long
+}
+
+type UserAccountDTO {
+  id: Long
+  userId: Long
+  accountId: Long
+}
+
+input UserAccountDTOInput {
+  id: Long
+  userId: Long
+  accountId: Long
+}
+
+type UserDTO {
+  id: Long
+  name: String
+  password: String
+  email: String
+  role: String
+}
+
+input UserDTOInput {
+  id: Long
+  name: String
+  password: String
+  email: String
+  role: String
+}
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+directive @payload on ARGUMENT_DEFINITION
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+

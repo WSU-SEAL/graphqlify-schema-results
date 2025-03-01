@@ -1,0 +1,667 @@
+type Query {
+  """Equivalent to GET /api/albums/{id}"""
+  album(id: BigInt!): Album
+
+  """Equivalent to GET /api/categories/{id}"""
+  category(id: BigInt!): Category
+
+  """Equivalent to GET /api/users/checkEmailAvailability"""
+  checkEmailAvailability(email: String!): UserIdentityAvailability
+
+  """Equivalent to GET /api/posts/{postId}/comments/{id}"""
+  comment(id: BigInt!, postId: BigInt!): Comment
+
+  """Equivalent to GET /api/albums/{id}/photos"""
+  getAllPhotosByAlbum(id: BigInt!, page: Int, size: Int): PagedResponsePhotoResponse
+
+  """Equivalent to GET /api/posts/category/{id}"""
+  getPostsByCategory(id: BigInt!, page: Int, size: Int): PagedResponsePost
+
+  """Equivalent to GET /api/posts/tag/{id}"""
+  getPostsByTag(id: BigInt!, page: Int, size: Int): PagedResponsePost
+
+  """Equivalent to GET /api/users/{username}/posts"""
+  getPostsCreatedBy(page: Int, size: Int, username: String!): PagedResponsePost
+
+  """Equivalent to GET /api/users/{username}/albums"""
+  pagedResponseAlbum(page: Int, size: Int, username: String!): PagedResponseAlbum
+
+  """Equivalent to GET /api/albums"""
+  pagedResponseAlbumResponse(page: Int, size: Int): PagedResponseAlbumResponse
+
+  """Equivalent to GET /api/categories"""
+  pagedResponseCategory(page: Int, size: Int): PagedResponseCategory
+
+  """Equivalent to GET /api/posts/{postId}/comments"""
+  pagedResponseComment(page: Int, postId: BigInt!, size: Int): PagedResponseComment
+
+  """Equivalent to GET /api/photos"""
+  pagedResponsePhotoResponse(page: Int, size: Int): PagedResponsePhotoResponse
+
+  """Equivalent to GET /api/posts"""
+  pagedResponsePost(page: Int, size: Int): PagedResponsePost
+
+  """Equivalent to GET /api/tags"""
+  pagedResponseTag(page: Int, size: Int): PagedResponseTag
+
+  """Equivalent to GET /api/todos"""
+  pagedResponseTodo(currentUser: CurrentUserInput!, page: Int, size: Int): PagedResponseTodo
+
+  """Equivalent to GET /api/photos/{id}"""
+  photoResponse(id: BigInt!): PhotoResponse
+
+  """Equivalent to GET /api/posts/{id}"""
+  post(id: BigInt!): Post
+
+  """Equivalent to GET /api/tags/{id}"""
+  tag(id: BigInt!): Tag
+
+  """Equivalent to GET /api/todos/{id}"""
+  todo(currentUser: CurrentUserInput!, id: BigInt!): Todo
+
+  """Equivalent to GET /api/users/checkUsernameAvailability"""
+  userIdentityAvailability(username: String!): UserIdentityAvailability
+
+  """Equivalent to GET /api/users/{username}/profile"""
+  userProfile(username: String!): UserProfile
+
+  """Equivalent to GET /api/users/me"""
+  userSummary(currentUser: CurrentUserInput!): UserSummary
+}
+
+type Album {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  photo: [Photo2]
+  title: String!
+  updatedAt: String
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+type Photo2 {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  thumbnailUrl: String!
+  title: String!
+  updatedAt: String
+  url: String!
+}
+
+type Category {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  name: String
+  posts: [Post]
+  updatedAt: String
+}
+
+type Post {
+  body: String
+  category: Category
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  tags: [Tag]
+  title: String
+  updatedAt: String
+}
+
+type Tag {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  name: String
+  updatedAt: String
+}
+
+type UserIdentityAvailability {
+  available: Boolean
+}
+
+type Comment {
+  body: String!
+  createdAt: String
+  createdBy: BigInt
+  email: String!
+  id: BigInt
+  name: String!
+  updatedAt: String
+}
+
+type PagedResponsePhotoResponse {
+  content: [PhotoResponse]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type PhotoResponse {
+  albumId: BigInt
+  id: BigInt
+  thumbnailUrl: String
+  title: String
+  url: String
+}
+
+type PagedResponsePost {
+  content: [Post]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type PagedResponseAlbum {
+  content: [Album]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type PagedResponseAlbumResponse {
+  content: [AlbumResponse]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type AlbumResponse {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  photo: [Photo2]
+  title: String
+  updatedAt: String
+  updatedBy: BigInt
+  user: User
+}
+
+type User {
+  address: Address
+  company: Company
+  email: String!
+  firstName: String!
+  id: BigInt
+  lastName: String!
+  password: String!
+  phone: String
+  roles: [Role]
+  username: String!
+  website: String
+}
+
+type Address {
+  city: String
+  geo: Geo
+  street: String
+  suite: String
+  user: User
+  zipcode: String
+}
+
+type Geo {
+  address: Address
+  lat: String
+  lng: String
+}
+
+type Company {
+  bs: String
+  catchPhrase: String
+  name: String
+  user: User
+}
+
+type Role {
+  id: BigInt
+  name: Name
+}
+
+enum Name {
+  ROLE_ADMIN
+  ROLE_USER
+}
+
+type PagedResponseCategory {
+  content: [Category]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type PagedResponseComment {
+  content: [Comment]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type PagedResponseTag {
+  content: [Tag]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type PagedResponseTodo {
+  content: [Todo]
+  last: Boolean
+  page: Int
+  size: Int
+  totalElements: BigInt
+  totalPages: Int
+}
+
+type Todo {
+  completed: Boolean
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  title: String!
+  updatedAt: String
+}
+
+input CurrentUserInput {
+  accountNonExpired: Boolean
+  accountNonLocked: Boolean
+  authorities: [GrantedAuthorityInput]
+  credentialsNonExpired: Boolean
+  enabled: Boolean
+  firstName: String
+  id: BigInt
+  lastName: String
+  username: String
+}
+
+input GrantedAuthorityInput {
+  authority: String
+}
+
+type UserProfile {
+  address: Address
+  company: Company
+  email: String
+  firstName: String
+  id: BigInt
+  joinedAt: String
+  lastName: String
+  phone: String
+  postCount: BigInt
+  username: String
+  website: String
+}
+
+type UserSummary {
+  firstName: String
+  id: BigInt
+  lastName: String
+  username: String
+}
+
+type Mutation {
+  """Equivalent to POST /api/albums"""
+  addAlbum(apiAlbumsInput: ApiAlbumsInput!): Album
+
+  """Equivalent to POST /api/categories"""
+  addCategory(apiCategoriesInput: ApiCategoriesInput!): Category
+
+  """Equivalent to POST /api/posts/{postId}/comments"""
+  addComment(apiPostCommentsInput: ApiPostCommentsInput!, postId: BigInt!): Comment
+
+  """Equivalent to POST /api/photos"""
+  addPhoto(apiPhotosInput: ApiPhotosInput!): PhotoResponse
+
+  """Equivalent to POST /api/posts"""
+  addPost(apiPostsInput: ApiPostsInput!): PostResponse
+
+  """Equivalent to POST /api/tags"""
+  addTag(apiTagsInput: ApiTagsInput!): Tag
+
+  """Equivalent to POST /api/todos"""
+  addTodo(apiTodosInput: ApiTodosInput!): Todo
+
+  """Equivalent to POST /api/users"""
+  addUser(userInput: UserInput!): User
+
+  """Equivalent to POST /api/auth/signin"""
+  authenticateUser(loginRequestInput: LoginRequestInput!): JwtAuthenticationResponse
+
+  """Equivalent to PUT /api/todos/{id}/complete"""
+  completeTodo(id: BigInt!, userPrincipalInput: UserPrincipalInput): Todo
+
+  """Equivalent to DELETE /api/albums/{id}"""
+  deleteAlbum(id: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/categories/{id}"""
+  deleteCategory(id: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/posts/{postId}/comments/{id}"""
+  deleteComment(id: BigInt!, postId: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/photos/{id}"""
+  deletePhoto(id: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/posts/{id}"""
+  deletePost(id: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/tags/{id}"""
+  deleteTag(id: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/todos/{id}"""
+  deleteTodo(id: BigInt!, userPrincipalInput: UserPrincipalInput): ApiResponse
+
+  """Equivalent to DELETE /api/users/{username}"""
+  deleteUser(userPrincipalInput: UserPrincipalInput, username: String!): ApiResponse
+
+  """Equivalent to PUT /api/users/{username}/giveAdmin"""
+  giveAdmin(username: String!): ApiResponse
+
+  """Equivalent to POST /api/auth/signup"""
+  registerUser(signUpRequestInput: SignUpRequestInput!): ApiResponse
+
+  """Equivalent to PUT /api/users/setOrUpdateInfo"""
+  setAddress(apiUsersSetOrUpdateInfoInput: ApiUsersSetOrUpdateInfoInput!): UserProfile
+
+  """Equivalent to PUT /api/users/{username}/takeAdmin"""
+  takeAdmin(username: String!): ApiResponse
+
+  """Equivalent to PUT /api/todos/{id}/unComplete"""
+  unCompleteTodo(id: BigInt!, userPrincipalInput: UserPrincipalInput): Todo
+
+  """Equivalent to PUT /api/albums/{id}"""
+  updateAlbum(apiAlbumInput: ApiAlbumInput!, id: BigInt!): AlbumResponse
+
+  """Equivalent to PUT /api/categories/{id}"""
+  updateCategory(apiCategoryInput: ApiCategoryInput!, id: BigInt!): Category
+
+  """Equivalent to PUT /api/posts/{postId}/comments/{id}"""
+  updateComment(apiPostCommentInput: ApiPostCommentInput!, id: BigInt!, postId: BigInt!): Comment
+
+  """Equivalent to PUT /api/photos/{id}"""
+  updatePhoto(apiPhotoInput: ApiPhotoInput!, id: BigInt!): PhotoResponse
+
+  """Equivalent to PUT /api/posts/{id}"""
+  updatePost(apiPostInput: ApiPostInput!, id: BigInt!): Post
+
+  """Equivalent to PUT /api/tags/{id}"""
+  updateTag(apiTagInput: ApiTagInput!, id: BigInt!): Tag
+
+  """Equivalent to PUT /api/todos/{id}"""
+  updateTodo(apiTodoInput: ApiTodoInput!, id: BigInt!): Todo
+
+  """Equivalent to PUT /api/users/{username}"""
+  updateUser(apiUserInput: ApiUserInput!, username: String!): User
+}
+
+input ApiAlbumsInput {
+  albumRequest: AlbumRequestInput
+  currentUser: UserPrincipalInput
+}
+
+input AlbumRequestInput {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  photo: [Photo2Input]
+  title: String
+  updatedAt: String
+  updatedBy: BigInt
+  user: UserInput
+}
+
+input Photo2Input {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  thumbnailUrl: String!
+  title: String!
+  updatedAt: String
+  url: String!
+}
+
+input UserInput {
+  address: AddressInput
+  company: CompanyInput
+  email: String!
+  firstName: String!
+  id: BigInt
+  lastName: String!
+  password: String!
+  phone: String
+  roles: [RoleInput]
+  username: String!
+  website: String
+}
+
+input AddressInput {
+  city: String
+  geo: GeoInput
+  street: String
+  suite: String
+  user: UserInput
+  zipcode: String
+}
+
+input GeoInput {
+  address: AddressInput
+  lat: String
+  lng: String
+}
+
+input CompanyInput {
+  bs: String
+  catchPhrase: String
+  name: String
+  user: UserInput
+}
+
+input RoleInput {
+  id: BigInt
+  name: Name
+}
+
+input UserPrincipalInput {
+  accountNonExpired: Boolean
+  accountNonLocked: Boolean
+  authorities: [GrantedAuthorityInput]
+  credentialsNonExpired: Boolean
+  enabled: Boolean
+  firstName: String
+  id: BigInt
+  lastName: String
+  username: String
+}
+
+input ApiCategoriesInput {
+  category: CategoryInput
+  currentUser: UserPrincipalInput
+}
+
+input CategoryInput {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  name: String
+  posts: [PostInput]
+  updatedAt: String
+}
+
+input PostInput {
+  body: String
+  category: CategoryInput
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  tags: [TagInput]
+  title: String
+  updatedAt: String
+}
+
+input TagInput {
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  name: String
+  updatedAt: String
+}
+
+input ApiPostCommentsInput {
+  commentRequest: CommentRequestInput
+  currentUser: UserPrincipalInput
+}
+
+input CommentRequestInput {
+  body: String!
+}
+
+input ApiPhotosInput {
+  currentUser: UserPrincipalInput
+  photoRequest: PhotoRequestInput
+}
+
+input PhotoRequestInput {
+  albumId: BigInt!
+  thumbnailUrl: String!
+  title: String!
+  url: String!
+}
+
+type PostResponse {
+  body: String
+  category: String
+  tags: [String]
+  title: String
+}
+
+input ApiPostsInput {
+  currentUser: UserPrincipalInput
+  postRequest: PostRequestInput
+}
+
+input PostRequestInput {
+  body: String!
+  categoryId: BigInt!
+  tags: [String]
+  title: String!
+}
+
+input ApiTagsInput {
+  currentUser: UserPrincipalInput
+  tag: TagInput
+}
+
+input ApiTodosInput {
+  currentUser: UserPrincipalInput
+  todo: TodoInput
+}
+
+input TodoInput {
+  completed: Boolean
+  createdAt: String
+  createdBy: BigInt
+  id: BigInt
+  title: String!
+  updatedAt: String
+}
+
+type JwtAuthenticationResponse {
+  accessToken: String
+  tokenType: String
+}
+
+input LoginRequestInput {
+  password: String!
+  usernameOrEmail: String!
+}
+
+type ApiResponse {
+  message: String
+  success: Boolean
+}
+
+input SignUpRequestInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
+}
+
+input ApiUsersSetOrUpdateInfoInput {
+  currentUser: UserPrincipalInput
+  infoRequest: InfoRequestInput
+}
+
+input InfoRequestInput {
+  bs: String
+  catchPhrase: String
+  city: String!
+  companyName: String
+  lat: String
+  lng: String
+  phone: String
+  street: String!
+  suite: String!
+  website: String
+  zipcode: String!
+}
+
+input ApiAlbumInput {
+  currentUser: UserPrincipalInput
+  newAlbum: AlbumRequestInput
+}
+
+input ApiCategoryInput {
+  category: CategoryInput
+  currentUser: UserPrincipalInput
+}
+
+input ApiPostCommentInput {
+  commentRequest: CommentRequestInput
+  currentUser: UserPrincipalInput
+}
+
+input ApiPhotoInput {
+  currentUser: UserPrincipalInput
+  photoRequest: PhotoRequestInput
+}
+
+input ApiPostInput {
+  currentUser: UserPrincipalInput
+  newPostRequest: PostRequestInput
+}
+
+input ApiTagInput {
+  currentUser: UserPrincipalInput
+  tag: TagInput
+}
+
+input ApiTodoInput {
+  currentUser: UserPrincipalInput
+  newTodo: TodoInput
+}
+
+input ApiUserInput {
+  currentUser: UserPrincipalInput
+  newUser: UserInput
+}

@@ -1,0 +1,606 @@
+type Address {
+  id: Long
+  street: String
+  suite: String
+  city: String
+  zipcode: String
+  geo: Geo
+  user: User
+}
+
+input AddressInput {
+  id: Long
+  street: String
+  suite: String
+  city: String
+  zipcode: String
+  geo: GeoInput
+  user: UserInput
+}
+
+type Album {
+  id: Long
+  title: String
+  user: User
+  photo: [Photo]
+}
+
+input AlbumInput {
+  id: Long
+  title: String
+  user: UserInput
+  photo: [PhotoInput]
+}
+
+input AlbumRequestInput {
+  id: Long
+  title: String
+  user: UserInput
+  photo: [PhotoInput]
+}
+
+type AlbumResponse {
+  id: Long
+  title: String
+  user: User
+  photo: [Photo]
+}
+
+type ApiResponse {
+  success: Boolean
+  message: String
+  status: HttpStatus
+}
+
+type Category {
+  id: Long
+  name: String
+  posts: [Post]
+}
+
+input CategoryInput {
+  id: Long
+  name: String
+  posts: [PostInput]
+}
+
+type Comment {
+  id: Long
+  name: String
+  email: String
+  body: String
+  post: Post
+  user: User
+}
+
+input CommentInput {
+  id: Long
+  name: String
+  email: String
+  body: String
+  post: PostInput
+  user: UserInput
+}
+
+input CommentRequestInput {
+  body: String
+}
+
+type Company {
+  id: Long
+  name: String
+  catchPhrase: String
+  bs: String
+  user: User
+}
+
+input CompanyInput {
+  id: Long
+  name: String
+  catchPhrase: String
+  bs: String
+  user: UserInput
+}
+
+type Geo {
+  id: Long
+  lat: String
+  lng: String
+  address: Address
+}
+
+input GeoInput {
+  id: Long
+  lat: String
+  lng: String
+  address: AddressInput
+}
+
+enum HttpStatus {
+  CONTINUE
+  SWITCHING_PROTOCOLS
+  PROCESSING
+  CHECKPOINT
+  OK
+  CREATED
+  ACCEPTED
+  NON_AUTHORITATIVE_INFORMATION
+  NO_CONTENT
+  RESET_CONTENT
+  PARTIAL_CONTENT
+  MULTI_STATUS
+  ALREADY_REPORTED
+  IM_USED
+  MULTIPLE_CHOICES
+  MOVED_PERMANENTLY
+  FOUND
+  MOVED_TEMPORARILY
+  SEE_OTHER
+  NOT_MODIFIED
+  USE_PROXY
+  TEMPORARY_REDIRECT
+  PERMANENT_REDIRECT
+  BAD_REQUEST
+  UNAUTHORIZED
+  PAYMENT_REQUIRED
+  FORBIDDEN
+  NOT_FOUND
+  METHOD_NOT_ALLOWED
+  NOT_ACCEPTABLE
+  PROXY_AUTHENTICATION_REQUIRED
+  REQUEST_TIMEOUT
+  CONFLICT
+  GONE
+  LENGTH_REQUIRED
+  PRECONDITION_FAILED
+  PAYLOAD_TOO_LARGE
+  REQUEST_ENTITY_TOO_LARGE
+  URI_TOO_LONG
+  REQUEST_URI_TOO_LONG
+  UNSUPPORTED_MEDIA_TYPE
+  REQUESTED_RANGE_NOT_SATISFIABLE
+  EXPECTATION_FAILED
+  I_AM_A_TEAPOT
+  INSUFFICIENT_SPACE_ON_RESOURCE
+  METHOD_FAILURE
+  DESTINATION_LOCKED
+  UNPROCESSABLE_ENTITY
+  LOCKED
+  FAILED_DEPENDENCY
+  UPGRADE_REQUIRED
+  PRECONDITION_REQUIRED
+  TOO_MANY_REQUESTS
+  REQUEST_HEADER_FIELDS_TOO_LARGE
+  UNAVAILABLE_FOR_LEGAL_REASONS
+  INTERNAL_SERVER_ERROR
+  NOT_IMPLEMENTED
+  BAD_GATEWAY
+  SERVICE_UNAVAILABLE
+  GATEWAY_TIMEOUT
+  HTTP_VERSION_NOT_SUPPORTED
+  VARIANT_ALSO_NEGOTIATES
+  INSUFFICIENT_STORAGE
+  LOOP_DETECTED
+  BANDWIDTH_LIMIT_EXCEEDED
+  NOT_EXTENDED
+  NETWORK_AUTHENTICATION_REQUIRED
+}
+
+input InfoRequestInput {
+  street: String
+  suite: String
+  city: String
+  zipcode: String
+  companyName: String
+  catchPhrase: String
+  bs: String
+  website: String
+  phone: String
+  lat: String
+  lng: String
+}
+
+scalar Instant
+
+type JwtAuthenticationResponse {
+  accessToken: String
+  tokenType: String
+}
+
+input LoginRequestInput {
+  usernameOrEmail: String
+  password: String
+}
+
+scalar Long
+
+type Mutation {
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AlbumController.java:56:9]"
+  addAlbum(albumRequest: AlbumRequestInput @payload): Album
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CategoryController.java:39:9]"
+  addCategory(category: CategoryInput @payload): Category
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CommentController.java:43:9]"
+  addComment(commentRequest: CommentRequestInput @payload, postId: Long): Comment
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PhotoController.java:40:9]"
+  addPhoto(photoRequest: PhotoRequestInput @payload): PhotoResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:63:9]"
+  addPost(postRequest: PostRequestInput @payload): PostResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TagController.java:42:9]"
+  addTag(tag: TagInput @payload): Tag
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:45:9]"
+  addTodo(todo: TodoInput @payload): Todo
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:93:9]"
+  addUser(user: UserInput @payload): User
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AuthController.java:54:9]"
+  authenticateUser(loginRequest: LoginRequestInput @payload): JwtAuthenticationResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:78:9]"
+  completeTodo(id: Long): Todo
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AlbumController.java:74:9]"
+  deleteAlbum(id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CategoryController.java:59:9]"
+  deleteCategory(id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CommentController.java:71:9]"
+  deleteComment(postId: Long, id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PhotoController.java:66:9]"
+  deletePhoto(id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:88:9]"
+  deletePost(id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TagController.java:66:9]"
+  deleteTag(id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:70:9]"
+  deleteTodo(id: Long): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:110:9]"
+  deleteUser(username: String): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:119:9]"
+  giveAdmin(username: String): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AuthController.java:65:9]"
+  registerUser(signUpRequest: SignUpRequestInput @payload): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:135:9]"
+  setAddress(infoRequest: InfoRequestInput @payload): UserProfile
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:127:9]"
+  takeAdmin(username: String): ApiResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:87:9]"
+  unCompleteTodo(id: Long): Todo
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AlbumController.java:67:9]"
+  updateAlbum(id: Long, newAlbum: AlbumRequestInput @payload): AlbumResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CategoryController.java:52:9]"
+  updateCategory(id: Long, category: CategoryInput @payload): Category
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CommentController.java:60:9]"
+  updateComment(postId: Long, id: Long, commentRequest: CommentRequestInput @payload): Comment
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PhotoController.java:56:9]"
+  updatePhoto(id: Long, photoRequest: PhotoRequestInput @payload): PhotoResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:79:9]"
+  updatePost(id: Long, newPostRequest: PostRequestInput @payload): Post
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TagController.java:57:9]"
+  updateTag(id: Long, tag: TagInput @payload): Tag
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:61:9]"
+  updateTodo(id: Long, newTodo: TodoInput @payload): Todo
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:101:9]"
+  updateUser(newUser: UserInput @payload, username: String): User
+}
+
+type PagedResponseOfAlbum {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfAlbumResponse {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfCategory {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfComment {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfPhotoResponse {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfPost {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfTag {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type PagedResponseOfTodo {
+  content: [AlbumResponse]
+  page: Int
+  size: Int
+  totalElements: Long
+  totalPages: Int
+  last: Boolean
+}
+
+type Photo {
+  id: Long
+  title: String
+  url: String
+  thumbnailUrl: String
+  album: Album
+}
+
+input PhotoInput {
+  id: Long
+  title: String
+  url: String
+  thumbnailUrl: String
+  album: AlbumInput
+}
+
+input PhotoRequestInput {
+  title: String
+  url: String
+  thumbnailUrl: String
+  albumId: Long
+}
+
+type PhotoResponse {
+  id: Long
+  title: String
+  url: String
+  thumbnailUrl: String
+  albumId: Long
+}
+
+type Post {
+  id: Long
+  title: String
+  body: String
+  user: User
+  category: Category
+  comments: [Comment]
+  tags: [Tag]
+}
+
+input PostInput {
+  id: Long
+  title: String
+  body: String
+  user: UserInput
+  category: CategoryInput
+  comments: [CommentInput]
+  tags: [TagInput]
+}
+
+input PostRequestInput {
+  title: String
+  body: String
+  categoryId: Long
+  tags: [String]
+}
+
+type PostResponse {
+  title: String
+  body: String
+  category: String
+  tags: [String]
+}
+
+type Query {
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:61:9]"
+  checkEmailAvailability(email: String): UserIdentityAvailability
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:54:9]"
+  checkUsernameAvailability(username: String): UserIdentityAvailability
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AlbumController.java:62:9]"
+  getAlbum(id: Long): Album
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AlbumController.java:47:9]"
+  getAllAlbums(page: Int, size: Int): PagedResponseOfAlbumResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CategoryController.java:32:9]"
+  getAllCategories(page: Int, size: Int): PagedResponseOfCategory
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CommentController.java:33:9]"
+  getAllComments(postId: Long, page: Int, size: Int): PagedResponseOfComment
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PhotoController.java:33:9]"
+  getAllPhotos(page: Int, size: Int): PagedResponseOfPhotoResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/AlbumController.java:80:9]"
+  getAllPhotosByAlbum(id: Long, page: Int, size: Int): PagedResponseOfPhotoResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:34:9]"
+  getAllPosts(page: Int, size: Int): PagedResponseOfPost
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TagController.java:32:9]"
+  getAllTags(page: Int, size: Int): PagedResponseOfTag
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:33:9]"
+  getAllTodos(page: Int, size: Int): PagedResponseOfTodo
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CategoryController.java:47:9]"
+  getCategory(id: Long): Category
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/CommentController.java:52:9]"
+  getComment(postId: Long, id: Long): Comment
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:46:9]"
+  getCurrentUser: UserSummary
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PhotoController.java:49:9]"
+  getPhoto(id: Long): PhotoResponse
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:72:9]"
+  getPost(id: Long): Post
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:43:9]"
+  getPostsByCategory(page: Int, size: Int, id: Long): PagedResponseOfPost
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/PostController.java:53:9]"
+  getPostsByTag(page: Int, size: Int, id: Long): PagedResponseOfPost
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:74:9]"
+  getPostsCreatedBy(username: String, page: Int, size: Int): PagedResponseOfPost
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TagController.java:50:9]"
+  getTag(id: Long): Tag
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/TodoController.java:53:9]"
+  getTodo(id: Long): Todo
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:67:9]"
+  getUSerProfile(username: String): UserProfile
+  "[/Users/amarees/IdeaProjects/Spring-Boot-Blog-REST-API/src/main/java/com/sopromadze/blogapi/controller/UserController.java:83:9]"
+  getUserAlbums(username: String, page: Int, size: Int): PagedResponseOfAlbum
+}
+
+type Role {
+  id: Long
+  name: RoleName
+}
+
+input RoleInput {
+  id: Long
+  name: RoleName
+}
+
+enum RoleName {
+  ROLE_ADMIN
+  ROLE_USER
+}
+
+input SignUpRequestInput {
+  firstName: String
+  lastName: String
+  username: String
+  email: String
+  password: String
+}
+
+type Tag {
+  id: Long
+  name: String
+  posts: [Post]
+}
+
+input TagInput {
+  id: Long
+  name: String
+  posts: [PostInput]
+}
+
+type Todo {
+  id: Long
+  title: String
+  completed: Boolean
+  user: User
+}
+
+input TodoInput {
+  id: Long
+  title: String
+  completed: Boolean
+  user: UserInput
+}
+
+type User {
+  id: Long
+  firstName: String
+  lastName: String
+  username: String
+  password: String
+  email: String
+  address: Address
+  phone: String
+  website: String
+  roles: [Role]
+  todos: [Todo]
+  albums: [Album]
+  posts: [Post]
+  comments: [Comment]
+  company: Company
+}
+
+type UserIdentityAvailability {
+  available: Boolean
+}
+
+input UserInput {
+  id: Long
+  firstName: String
+  lastName: String
+  username: String
+  password: String
+  email: String
+  address: AddressInput
+  phone: String
+  website: String
+  roles: [RoleInput]
+  todos: [TodoInput]
+  albums: [AlbumInput]
+  posts: [PostInput]
+  comments: [CommentInput]
+  company: CompanyInput
+}
+
+type UserProfile {
+  id: Long
+  username: String
+  firstName: String
+  lastName: String
+  joinedAt: Instant
+  email: String
+  address: Address
+  phone: String
+  website: String
+  company: Company
+  postCount: Long
+}
+
+type UserSummary {
+  id: Long
+  username: String
+  firstName: String
+  lastName: String
+}
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+directive @payload on ARGUMENT_DEFINITION
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+
